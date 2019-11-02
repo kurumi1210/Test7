@@ -2,8 +2,11 @@ package com.example.test7;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.test7.dataModels.Student;
@@ -29,5 +32,18 @@ public class MainActivity extends AppCompatActivity {
         StudentAdapter adapter = new StudentAdapter(arrayListStudent, this);
 
         listViewStudents.setAdapter(adapter);
+
+        listViewStudents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Student student = (Student)parent.getAdapter().getItem(position);
+
+                Intent i = new Intent(MainActivity.this, StudentProfileActivity.class);
+                i.putExtra("name", student.getStudentName());
+                i.putExtra("id", student.getStudentID());
+                i.putExtra("course", student.getStudentCourse());
+                startActivity(i);
+            }
+        });
     }
 }
